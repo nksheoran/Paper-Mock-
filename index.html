@@ -3,7 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PaperMock</title>
+    <title>PaperMock</title> 
+    <script>
+  // If the phone tries to open the root, force it into the Paper-Mock folder
+  if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+    window.location.replace('/Paper-Mock-/');
+  }
+</script>
     <link rel="manifest" href="./manifest.json" />
     <meta name="theme-color" content="#568A97">
     <script src="https://cdn.tailwindcss.com"></script>
