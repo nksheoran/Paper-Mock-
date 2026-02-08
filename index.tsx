@@ -13,3 +13,4 @@ root.render(
     <App />
   </React.StrictMode>
 );
+document.body.classList.add('app-ready');
