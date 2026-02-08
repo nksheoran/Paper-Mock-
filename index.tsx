@@ -1,3 +1,7 @@
+// SIGNAL: Tell the browser to hide the loading spinner IMMEDIATELY
+// This MUST be at the very top so the spinner disappears even if React takes time to mount
+document.body.classList.add('app-ready');
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -13,4 +17,3 @@ root.render(
     <App />
   </React.StrictMode>
 );
-document.body.classList.add('app-ready');
