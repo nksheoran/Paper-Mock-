@@ -49,32 +49,24 @@
       }
       @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-      /* Shimmer Effect for later use */
-      .skeleton {
-        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-        background-size: 200% 100%;
-        animation: shimmer 1.5s infinite;
-      }
-      @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
       /* This removes the loader when app-ready class is added to body */
       .app-ready #initial-loader { display: none; }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@18.3.1",
-    "react/": "https://esm.sh/react@18.3.1/",
-    "react-dom": "https://esm.sh/react-dom@18.3.1",
-    "react-dom/": "https://esm.sh/react-dom@18.3.1/",
-    "lucide-react": "https://esm.sh/lucide-react@0.469.0?external=react,react-dom",
-    "recharts": "https://esm.sh/recharts@2.13.0?external=react,react-dom",
-    "date-fns": "https://esm.sh/date-fns@3.6.0",
-    "framer-motion": "https://esm.sh/framer-motion@11.0.24?external=react,react-dom"
-  }
-}
-</script>
-</head>
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.3.1",
+        "react/": "https://esm.sh/react@18.3.1/",
+        "react-dom": "https://esm.sh/react-dom@18.3.1",
+        "react-dom/": "https://esm.sh/react-dom@18.3.1/",
+        "lucide-react": "https://esm.sh/lucide-react@0.469.0?external=react,react-dom",
+        "recharts": "https://esm.sh/recharts@2.13.0?external=react,react-dom",
+        "date-fns": "https://esm.sh/date-fns@3.6.0",
+        "framer-motion": "https://esm.sh/framer-motion@11.0.24?external=react,react-dom"
+      }
+    }
+    </script>
+  </head>
   <body>
     <div id="initial-loader">
       <div class="google-spinner"></div>
