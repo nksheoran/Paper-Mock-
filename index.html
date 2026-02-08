@@ -3,19 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PaperMock</title> 
+    <title>PaperMock</title>
+    
     <script>
-  // If the phone tries to open the root, force it into the Paper-Mock folder
-  if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
-    window.location.replace('/Paper-Mock-/');
-  }
-</script>
+      if (window.location.pathname === '/' || window.location.pathname.endsWith('github.io')) {
+        window.location.replace('/Paper-Mock-/');
+      }
+    </script>
+
     <link rel="manifest" href="./manifest.json" />
     <meta name="theme-color" content="#568A97">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Caveat:wght@400..700&family=Courier+Prime:wght@400;700&family=Dancing+Script:wght@400..700&family=Indie+Flower&family=Inter:wght@300;400;500;600&family=Pacifico&family=Patrick+Hand&family=Playpen+Sans:wght@100..800&family=Sacramento&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    
     <script>
       tailwind.config = {
         theme: {
@@ -37,10 +40,16 @@
         }
       }
     </script>
+
     <style>
-      body { background-color: #FDFBF7; color: #2D2D2D; transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out; }
-      
-      /* Professional Google-style Spinner */
+      body {
+        background-color: #FDFBF7;
+        color: #2D2D2D;
+        transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+        margin: 0; padding: 0;
+      }
+
+      /* Professional Gmail-style Spinner */
       #initial-loader {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background: #FDFBF7; display: flex; justify-content: center;
@@ -55,9 +64,16 @@
       }
       @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-      /* This removes the loader when app-ready class is added to body */
+      /* Hide loader when app is ready */
       .app-ready #initial-loader { display: none; }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
     </style>
+
     <script type="importmap">
     {
       "imports": {
@@ -77,11 +93,15 @@
     <div id="initial-loader">
       <div class="google-spinner"></div>
     </div>
+
     <div id="root"></div>
+
     <script type="module" src="./index.tsx"></script>
+
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
+          // FIX 4: Service worker path corrected with dot ./
           navigator.serviceWorker.register('./sw.js')
             .then(reg => console.log('Service Worker registered', reg))
             .catch(err => console.log('Service Worker registration failed', err));
