@@ -10,75 +10,137 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Caveat:wght@400..700&family=Courier+Prime:wght@400;700&family=Dancing+Script:wght@400..700&family=Indie+Flower&family=Inter:wght@300;400;500;600&family=Pacifico&family=Patrick+Hand&family=Playpen+Sans:wght@100..800&family=Sacramento&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@400;700&family=Playpen+Sans:wght@800&display=swap" rel="stylesheet">
     
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              hand: ['"Patrick Hand"', 'cursive'],
-              caveat: ['"Caveat"', 'cursive'],
-              sans: ['"Inter"', 'sans-serif'],
-            },
-            colors: {
-              paper: { DEFAULT: '#FDFBF7', dark: '#F5F1E8' },
-              ink: { DEFAULT: '#2D2D2D', light: '#5A5A5A' },
-            },
-            boxShadow: {
-              soft: '2px 4px 12px rgba(0, 0, 0, 0.05)',
-              paper: '1px 1px 3px rgba(0,0,0,0.1), 4px 4px 0px rgba(0,0,0,0.05)',
-            }
-          }
-        }
-      }
-    </script>
-
     <style>
-      body { background-color: #FDFBF7; color: #2D2D2D; margin: 0; padding: 0; }
+      /* 1. Loader & Background Styling */
       #initial-loader {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: #FDFBF7; display: flex; justify-content: center;
-        align-items: center; z-index: 9999;
+        position: fixed; inset: 0; display: flex; justify-content: center;
+        align-items: center; z-index: 9999; background: #fff;
+        transition: opacity 1s ease-out;
       }
-      .google-spinner {
-        width: 40px; height: 40px;
-        border: 3px solid rgba(86, 138, 151, 0.1);
-        border-top: 3px solid #568A97;
-        border-radius: 50%;
-        animation: spin 0.8s linear infinite;
+
+      .medical-studio-bg {
+        position: absolute; inset: 0;
+        background: radial-gradient(circle, #ffffff 0%, #f0f4f8 100%);
+        z-index: -1;
       }
-      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-      .app-ready #initial-loader { display: none; }
+
+      /* 2. 3D Notebook Animation Styling */
+      .book-container { perspective: 2000px; }
+      .book {
+        width: 320px; height: 420px; position: relative;
+        transform-style: preserve-3d; transform: rotateX(10deg);
+      }
+      .leaf {
+        position: absolute; inset: 0; transform-origin: left;
+        transform-style: preserve-3d; transition: transform 1.8s ease-in-out;
+      }
+      .page {
+        position: absolute; inset: 0; backface-visibility: hidden;
+        display: flex; align-items: center; justify-content: center;
+        border-radius: 0 10px 10px 0;
+      }
+
+      /* Blue Leather Cover */
+      .cover-front {
+        background: #1a3a5f; color: white;
+        box-shadow: 15px 15px 35px rgba(0,0,0,0.2), inset -2px 0 10px rgba(0,0,0,0.5);
+      }
+      .main-title { font-family: 'Playpen Sans', sans-serif; font-size: 42px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+
+      /* Internal Pages */
+      .page-back, .page-right {
+        background: #fafafa; border: 1px solid #ddd;
+        box-shadow: inset 5px 0 15px rgba(0,0,0,0.05);
+      }
+      .handwriting {
+        font-family: 'Dancing Script', cursive; font-size: 38px;
+        color: #1a3a5f; text-align: center; margin: 0;
+      }
+      .steth { font-size: 40px; margin-top: 15px; }
+
+      /* Rotation & Fading */
+      .page-front, .cover-inside { background: #e0e0e0; transform: rotateY(180deg); }
+      .flip-open { transform: rotateY(-145deg); }
+      .loader-hidden { opacity: 0; pointer-events: none; }
+
+      /* App Reveal */
+      body { background-color: #FDFBF7; margin: 0; padding: 0; }
     </style>
 
     <script type="importmap">
     {
       "imports": {
         "react": "https://esm.sh/react@18.3.1",
-        "react/": "https://esm.sh/react@18.3.1/",
         "react-dom": "https://esm.sh/react-dom@18.3.1",
-        "react-dom/": "https://esm.sh/react-dom@18.3.1/",
         "lucide-react": "https://esm.sh/lucide-react@0.469.0?external=react,react-dom",
-        "recharts": "https://esm.sh/recharts@2.13.0?external=react,react-dom",
-        "date-fns": "https://esm.sh/date-fns@3.6.0",
         "framer-motion": "https://esm.sh/framer-motion@11.0.24?external=react,react-dom"
       }
     }
     </script>
   </head>
   <body>
-    <div id="initial-loader"><div class="google-spinner"></div></div>
+    <div id="initial-loader">
+      <div class="medical-studio-bg"></div>
+      <div class="book-container">
+        <div class="book">
+          <div class="leaf base-leaf">
+            <div class="page page-right">
+              <div class="content">
+                <h2 class="handwriting">Ujjwal Jangra</h2>
+                <div class="steth">🩺</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="leaf" id="pageFlip">
+            <div class="page page-front"></div>
+            <div class="page page-back">
+              <div class="content">
+                <h2 class="handwriting">Naman Kumar</h2>
+                <div class="steth">🩺</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="leaf" id="coverFlip">
+            <div class="page cover-front">
+              <h1 class="main-title">Paper Mock</h1>
+            </div>
+            <div class="page cover-inside"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.log('Service Worker registered', reg))
-            .catch(err => console.log('Service Worker registration failed', err));
-        });
-      }
+      document.addEventListener('DOMContentLoaded', () => {
+        const loader = document.getElementById('initial-loader');
+        const cover = document.getElementById('coverFlip');
+        const page = document.getElementById('pageFlip');
+
+        // Sequence 1: Open Cover
+        setTimeout(() => {
+          cover.classList.add('flip-open');
+        }, 1000);
+
+        // Sequence 2: Flip Page to reveal names
+        setTimeout(() => {
+          page.classList.add('flip-open');
+        }, 2800);
+
+        // Sequence 3: Fade out and start app
+        setTimeout(() => {
+          loader.classList.add('loader-hidden');
+          // Signal to React that app can render
+          document.body.classList.add('app-ready');
+        }, 6500);
+      });
     </script>
+
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>
