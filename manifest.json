@@ -2,7 +2,7 @@
   "name": "PaperMock",
   "short_name": "PaperMock",
   "description": "The Aesthetic Productivity Companion for Students.",
-  "start_url": "/",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#FDFBF7",
   "theme_color": "#568A97",
